@@ -15,8 +15,8 @@ for d in range(1,nbday+1):
 
 
 
-    p1 = open(f"{dospath}/parti1.py","w")
-    p2 = open(f"{dospath}/parti2.py","w")
+    p1 = open(f"{dospath}/part1.py","w")
+    p2 = open(f"{dospath}/part2.py","w")
     open(f"{dospath}/inputExemple.txt","w")
     open(f"{dospath}/input.txt","w")
 
