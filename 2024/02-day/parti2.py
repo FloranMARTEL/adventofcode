@@ -3,7 +3,6 @@ from copy import deepcopy
 
 file = open("inputExemple.txt","r")
 file = open("input.txt","r")
-file = open("t","r")
 data = file.read()
 
 datalist = data.split("\n")
