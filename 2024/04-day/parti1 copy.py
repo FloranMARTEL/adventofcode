@@ -50,70 +50,61 @@ for i in range(len(datalist)):
         j2 = abs(len(datalist[0])-1-j)
         diago2[i-j2+len(datalist[0])-1][j] = datalist[i][j]
 
-par = [diago]
+par = [nn,va,diago,diago2]
 
 for li in par:
 
 
     for i in range(len(li)):
+        x = False
         m = False
         a = False
 
         s2 = False
         a2 = False
+        m2 = False
         for j in range(len(li[0])):
             oo = li[i]
             v=li[i][j]
-            if v == "M" and not a:
+            if v == "X" and not m and not a:
+                x = True
+            elif v == "M" and x and not m and not a:
                 m = True
             elif v == "A" and m and not a:
                 a = True
             elif v == "S" and a:
-                
-                cl = i+j-(len(li[0])-1)
-
-                if (nn[cl-2][j] == "M" and nn[cl][j-2] == "S") or (nn[cl-2][j] == "S" and nn[cl][j-2] == "M"):
-                    cpt+=1
-
+                cpt+=1
                 x = False
                 m = False
                 a = False
-            elif v in ("M","A","S"):
+            elif v in ("X","M","A","S"):
+                x = False
                 m = False
                 a = False
 
-                if v == "M":
+                if v == "X":
                     x = True
-            else:
-                m = False
-                a = False
                     
             
             #reverse
-            if v == "S" and not a2:
+            if v == "S" and not a2 and not m2:
                 s2 = True
-            elif v == "A" and s2 and not a2:
+            elif v == "A" and s2 and not a2 and not m2:
                 a2 = True
-            elif v == "M" and a2 :
-                cl = i+j-(len(li[0])-1)
-
-                print(nn[cl][j])
-
-                if (nn[cl-2][j] == "M" and nn[cl][j-2] == "S") or (nn[cl-2][j] == "S" and nn[cl][j-2] == "M"):
-                    cpt+=1
-
+            elif v == "M" and a2 and not m2:
+                m2 = True
+            elif v == "X" and m2:
+                cpt+=1
                 s2 = False
                 a2 = False
                 m2 = False
-            elif v in ("S","A","M"):
+            elif v in ("S","A","M","X"):
                 s2 = False
                 a2 = False
+                m2 = False
 
                 if v == "S":
                     s2 = True
-            else:
-                s2 = False
-                a2 = False
 
 
 print(cpt)

@@ -1,0 +1,54 @@
+def count_x_mas(grid):
+    rows = len(grid)
+    cols = len(grid[0])
+    target = "MAS"
+    count = 0
+
+    # Directions for the 4 diagonals (row_change, col_change) for the "X" shape
+    directions = [
+        (1, 1),   # bottom-right diagonal
+        (1, -1),  # bottom-left diagonal
+        (-1, 1),  # top-right diagonal
+        (-1, -1), # top-left diagonal
+    ]
+
+    def is_valid(r, c):
+        return 0 <= r < rows and 0 <= c < cols
+
+    # Check for "X-MAS" pattern starting from (r, c) in a given direction (dr, dc)
+    def check_x_mas(r, c, dr, dc):
+        # Check the first "MAS" in the given direction (dr, dc)
+        for i in range(3):
+            nr, nc = r + dr * i, c + dc * i
+            if not is_valid(nr, nc) or grid[nr][nc] != target[i]:
+                return False
+        # Check the second "MAS" in the opposite direction (-dr, -dc)
+        for i in range(3):
+            nr, nc = r - dr * i, c - dc * i
+            if not is_valid(nr, nc) or grid[nr][nc] != target[i]:
+                return False
+        return True
+
+    # Iterate over all positions in the grid
+    for r in range(1, rows - 1):  # Skip the borders as they can't be the center
+        for c in range(1, cols - 1):  # Skip the borders as they can't be the center
+            # Check the "X-MAS" pattern in all four diagonal directions
+            for dr, dc in directions:
+                if check_x_mas(r, c, dr, dc):
+                    count += 1
+
+    return count
+
+
+
+
+# Example usage:
+
+file = open("inputExemple.txt","r")
+#file = open("input.txt","r")
+data = file.read()
+
+grid = data.split("\n")
+
+
+print(count_x_mas(grid))  # Output: 18
