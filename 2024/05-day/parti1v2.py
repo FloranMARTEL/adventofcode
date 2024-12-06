@@ -1,6 +1,7 @@
-#part
+#parti1
+
 file = open("inputExemple.txt","r")
-file = open("input.txt","r")
+#file = open("input.txt","r")
 data = file.read()
 
 datalist = data.split("\n\n")
@@ -28,9 +29,8 @@ def so(a,b):
     
     
     return True
-    
 
-s2=0
+s = 0
 
 for m in mj:
     ok = True
@@ -39,23 +39,12 @@ for m in mj:
             if not so(m[i],m[j]):
                 ok = False
     
-    if not ok:
-        serted = m[:]
-        for i in range(len(serted)):
-            for j in range(i+1,len(serted)):
-
-                if not so(serted[i],serted[j]):
-                    tmp = serted[i]
-                    serted[i] = serted[j]
-                    serted[j] = tmp
-        
-        s2 += int(serted[len(serted)//2])
+    if ok:
+        s += int(m[len(m)//2])
 
 
 
 
 
 
-
-
-print(s2)
+print(s)
