@@ -71,7 +71,6 @@ def plus5(v):
 #         j+=1
 
 #     i-=1
-dicp = dict()
 dic = dict()
 i = 75//5
 while i > 0:
@@ -94,11 +93,7 @@ while i > 0:
             for val in a:
                 datalist.insert(j,val)
 
-        j+=len(v)
-
-
-
-    
+        j+=len(v)    
     
 
     i-=1
