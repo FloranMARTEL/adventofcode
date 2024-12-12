@@ -1,7 +1,7 @@
 #parti1
 
 file = open("inputExemple.txt","r")
-# file = open("input.txt","r")
+file = open("input.txt","r")
 data = file.read()
 
 datalist = data.split("\n")
@@ -37,9 +37,6 @@ for i in range(len(datalist)):
         if c:
             region.append(rec(i,j,set()))
 
-for r in region:
-    print(len(r), r)
-
 
 def cptclot(o,s):
 
@@ -54,7 +51,7 @@ def cptclot(o,s):
         cptg = 0
         if g in s:
             s.remove(g)
-            cptg = clg(d,s)
+            cptg = clg(g,s)
         
         return 1
     
@@ -70,7 +67,7 @@ def cptclot(o,s):
         if g in s:
 
             s.remove(g)
-            cptg = clg(d,s)
+            cptg = clg(g,s)
         
         return 1
 
@@ -82,6 +79,7 @@ def cld(o,s):
         d = (o[0],o[1]+1,o[2])
         cptd = 0
         if d in s:
+            s.remove(d)
             cptd = cld(d,s)
         
         return 1
@@ -105,7 +103,7 @@ def clg(o,s):
         cptg = 0
         if g in s:
             s.remove(g)
-            cptg = clg(d,s)
+            cptg = clg(g,s)
         
         return 1
     
@@ -115,7 +113,7 @@ def clg(o,s):
         cptg = 0
         if g in s:
             s.remove(g)
-            cptg = clg(d,s)
+            cptg = clg(g,s)
         
         return 1
 
@@ -143,9 +141,6 @@ for r in region:
         c = setcl.pop()
         cl += cptclot(c,setcl)
 
-    
-
-    print(cl,len(r))
 
     su += (cl * len(r))
 
