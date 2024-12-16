@@ -3,7 +3,7 @@
 from copy import deepcopy
 
 file = open("inputExemple.txt","r")
-file = open("input.txt","r")
+# file = open("input.txt","r")
 data = file.read()
 
 datalist = data.split("\n")
@@ -117,3 +117,8 @@ for i in range(len(res2)-1):
     su += di[res2[i]][res2[i+1]]
 
 print(su)
+
+
+for k in di:
+    if len(di[k]) < 2:
+        print("erreur")
