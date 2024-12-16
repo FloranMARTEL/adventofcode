@@ -8,6 +8,14 @@ data = file.read()
 
 datalist = data.split("\n")
 
+dada = []
+for i in range(len(datalist)):
+    dada.append([])
+    for j in range(len(datalist[i])):
+        dada[i].append(datalist[i][j])
+
+datalist = dada
+
 
 def dij(graph,start,end):
 
@@ -15,19 +23,20 @@ def dij(graph,start,end):
     tab = {start : 0}
     parent = {start : None}
 
+    cc = start
+    sew = set()
+
     candidat = None
 
     while candidat == None or len(candidat) != 0:
 
-    
-
         candidat = []
 
-        for v in view:
-            des = graph[v]
-            for key in des:
-                candidat.append((v,key,des[key]))
-        
+        des = graph[cc]
+        for key in des:
+            if des[key] not in sew:
+                candidat.append((cc,key,des[key]))
+
         for c in candidat:
             if c[1] not in tab:
                 tab[c[1]] = tab[c[0]]+c[2]
@@ -37,9 +46,27 @@ def dij(graph,start,end):
                 tab[c[1]] = tab[c[0]]+c[2]
                 parent[c[1]] = c[0]
 
-            del graph[c[0]][c[1]]
+            #del graph[c[0]][c[1]]
 
             view.add(c[1])
+
+        min = None
+        e = None
+        for elem  in view.difference(sew):
+            if min == None or min > tab[elem]:
+                min = tab[elem]
+                e = elem
+
+        
+        if e != None:
+            sew.add(e)
+            cc = e
+        else:
+            print("erreur")
+            break
+
+        
+
 
 
     path = [end]
@@ -49,8 +76,6 @@ def dij(graph,start,end):
         path.append(curent)
     path =  list(reversed(path))
     return path
-    print(path)
-    
 
 
 # g = { (1,1,(-1,0)) : {(0,1,(-1,0)) : 1},
@@ -64,13 +89,11 @@ graph={
   'd':{}
 }
 
-# r = dij(graph,'s','b')
+r = dij(graph,'s','b')
 
 
 
-
-
-direction =((1,0),(0,1),(-1,0),(0,-1))
+direction =[(1,0),(0,1),(-1,0),(0,-1)]
 
 di = dict()
 
@@ -101,20 +124,34 @@ for i in range(len(datalist)):
 
 
 
-
+import time
 
 res = dij(deepcopy(di),source,end)
-res2 = dij(deepcopy(di),source,(end[0],end[1],direction[1]))
-
+# res2 = dij(deepcopy(di),source,(end[0],end[1],direction[1]))
 su = 0
+da = datalist
 for i in range(len(res)-1):
+    v = di[res[i]][res[i+1]]
     su += di[res[i]][res[i+1]]
+    # da[source[0]][source[1]] = "."
+    da[res[i][0]][res[i][1]] = "S"
 
-print(su)
+    # text = "\n".join(list(map(lambda x : "".join(x),da)))
 
-su = 0
-for i in range(len(res2)-1):
-    su += di[res2[i]][res2[i+1]]
+    # print(text)
+    # print(v)
+    # f = open("test.txt","w")
+
+    # f.write(f"{v}\n{text}")
+    # f.close()
+
+    # time.sleep(0.25)
+
+
+
+
+
+print(len(res))
 
 print(su)
 
