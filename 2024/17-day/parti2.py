@@ -39,7 +39,18 @@ def getcombo(val):
     
 from tqdm import tqdm      
 
-for j in tqdm(range(134_217_728,1_073_741_823+1)):
+find = False
+#tqdm(range(8**5,8**6))
+print(8**17,8**18)
+for j in tqdm(range(8**17,8**18)):
+
+    if j == 117440:
+        print("ici")
+
+    a = j
+    b = 0
+    c = 0
+
 
     ouput = []
     # i = len(prog)-2
@@ -87,19 +98,24 @@ for j in tqdm(range(134_217_728,1_073_741_823+1)):
 
         if out != None: 
             ouput.append(out)
+            if out != prog[len(ouput)-1]:
+                break
         
 
         if not jump:
             i+=2
 
     
-    if ouput == [2,4,1,3,7,5,0,3,1,5,4,4,5,5,3,0]:
+    if ouput == prog:
+        find=True
         break
 
 newo = list(map(str,ouput))
 print(ouput)
 print(len(ouput))
 print(",".join(newo))
+print(f"j={j}")
+print(f"find={find}")
 print(a)
 print(b)
 print(c)
