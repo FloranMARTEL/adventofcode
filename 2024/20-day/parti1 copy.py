@@ -114,12 +114,12 @@ for ip in range(len(pa)-2):
 
         su = difr+difc
 
-        if su <= 20: #(difr == 2 and difc == 0 ) or (difc == 2 and difr == 0 ):
+        if su <= 2: #(difr == 2 and difc == 0 ) or (difc == 2 and difr == 0 ):
             
             m = jp-ip
             co = len(pa)-(jp-ip-1) + su
 
-            if 76 <= (jp-ip)-su:
+            if 100 <= (jp-ip)-su:
                 print((jp-ip)-su)
                 cpt+=1
 
