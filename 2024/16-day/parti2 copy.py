@@ -34,19 +34,21 @@ def dij(graph,start,end):
 
         des = graph[cc]
         for key in des:
-            if des[key] not in sew:
+            if True :
                 candidat.append((cc,key,des[key]))
+                
 
         for c in candidat:
             if c[1] not in tab:
                 tab[c[1]] = tab[c[0]]+c[2]
-                parent[c[1]] = c[0]
+                parent[c[1]] = {c[0]}
             
             elif tab[c[1]] > tab[c[0]]+c[2]:
                 tab[c[1]] = tab[c[0]]+c[2]
-                parent[c[1]] = c[0]
+                parent[c[1]] = {c[0]}
+            elif tab[c[1]] == tab[c[0]]+c[2] :
+                parent[c[1]].add(c[0])
 
-            #del graph[c[0]][c[1]]
 
             view.add(c[1])
 
@@ -67,29 +69,40 @@ def dij(graph,start,end):
 
         
 
+    
+    def getss(end,start,parent):
 
+        if end == (7,5,(0,1)):
+            print('ici')
 
-    path = [end]
-    curent = end
-    while curent != start:
-        curent = parent[curent]
-        path.append(curent)
-    path =  list(reversed(path))
-    return path
+        if end == start:
+            return {(end[0],end[1])}
+
+        myset = {(end[0],end[1])}
+        for p in parent[end]:
+            
+            myset = myset.union(getss(p,start,parent))
+
+        return myset
+
+    
+
+    return getss(end,start,parent)
+
 
 
 # g = { (1,1,(-1,0)) : {(0,1,(-1,0)) : 1},
 #      (0,1,(-1,0)) : {(-1,1,(-1,0)) : 1}}
         
 graph={
-  's':{'a':8,'b':4},
-  'a':{'b':4},
+  's':{'a':4,'b':4},
+  'a':{'b':2,'c':2},
   'b':{'a':3,'c':2,'d':5},
   'c':{'d':2},
   'd':{}
 }
 
-r = dij(graph,'s','b')
+# r = dij(graph,'s','c')
 
 
 
@@ -127,14 +140,31 @@ for i in range(len(datalist)):
 import time
 
 res = dij(deepcopy(di),source,end)
+
+
+print(len(res))
+print(res)
+
+for r in res:
+    datalist[r[0]][r[1]] = "0"
+
+
+text = "\n".join(list(map(lambda x : "".join(x),datalist)))
+
+
+f = open("test.txt","w")
+
+f.write(f"{text}")
+f.close()
+
 # res2 = dij(deepcopy(di),source,(end[0],end[1],direction[1]))
-su = 0
-da = datalist
-for i in range(len(res)-1):
-    v = di[res[i]][res[i+1]]
-    su += di[res[i]][res[i+1]]
-    # da[source[0]][source[1]] = "."
-    da[res[i][0]][res[i][1]] = "S"
+# su = 0
+# da = datalist
+# for i in range(len(res)-1):
+#     v = di[res[i]][res[i+1]]
+    # su += di[res[i]][res[i+1]]
+    # # da[source[0]][source[1]] = "."
+    # da[res[i][0]][res[i][1]] = "S"
 
     # text = "\n".join(list(map(lambda x : "".join(x),da)))
 
@@ -151,11 +181,11 @@ for i in range(len(res)-1):
 
 
 
-print(len(res))
+# print(len(res))
 
-print(su)
+# print(su)
 
 
-for k in di:
-    if len(di[k]) < 2:
-        print("erreur")
+# for k in di:
+#     if len(di[k]) < 2:
+#         print("erreur")

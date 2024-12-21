@@ -113,7 +113,7 @@ graph={
   'd':{}
 }
 
-r = dij(graph,'s','b')
+r = dij(graph,'s','c')
 
 
 
