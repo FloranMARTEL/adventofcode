@@ -7,7 +7,7 @@ print((8**5))
 print((8**6))
 
 file = open("inputExemple.txt","r")
-file = open("input.txt","r")
+# file = open("input.txt","r")
 data = file.read()
 
 datalist = data.split("\n")
@@ -43,13 +43,11 @@ def getcombo(val):
 from tqdm import tqdm      
 
 find = False
+ouput = []
+j=0
 #tqdm(range(8**5,8**6))
-last = None
-setval = set()
-lastsetlen = 0
-print(8**15,8**16)
-for j in tqdm(range(8**15,8**16,8)):
-    # j = j*(8**15)
+print(8**17,8**18)
+for j in tqdm(range(8**5,8**6,8)):
 
     if j == 117440:
         print("ici")
@@ -80,7 +78,7 @@ for j in tqdm(range(8**15,8**16,8)):
             b= t
         
         elif instru == 2:
-            t = (valcomb%8)
+            t = (valcomb%8)%7
             b = t
 
         elif instru == 3:
@@ -106,18 +104,6 @@ for j in tqdm(range(8**15,8**16,8)):
         if out != None: 
             ouput.append(out)
             if out != prog[len(ouput)-1]:
-                break
-            elif len(ouput) == 5 and ouput == [2,4,1,3,7]:
-                if last != None:
-                    setval.add((b,c,j-last))
-                    if lastsetlen == len(setval):
-                        print("AAAAAA")
-                    else:
-                        lastsetlen = len(setval)
-                    print(f"A? = {j} : {j-last}")
-
-                    
-                last = j
                 break
         
 

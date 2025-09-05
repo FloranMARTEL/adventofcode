@@ -1,0 +1,18 @@
+def showscreen(tab):
+    text = ""
+    for l in tab:
+        for c in l:
+            text += c
+        text += "\n"
+    
+    print(text)
+
+
+def createtab(r,c,val) -> list:
+    tab = []
+    for i in range(r):
+        tab.append([])
+        for j in range(c):
+            tab[i].append(val)
+    
+    return tab

@@ -36,6 +36,46 @@ def getcombo(val):
     
         
 
+def nextStep(A):
+    B = A%8
+    B = B ^ 3
+    C = A//(2**B)
+    B = B ^ 5
+    B = B ^ C
+    return B%8
+
+def back(A,pos):
+
+    if pos == 0:
+        histoA.append(A)
+
+    if nextStep(A) == prog[pos]:
+        
+        for newA in range(8):
+            back(A*8+newA,pos-1)
+
+def find(A, col=0):
+    if nextStep(A) != prog[-(col + 1)]:
+        return
+
+    if col == len(prog) - 1:
+        histoA.append(A)
+    else:
+        for B in range(8):
+            find(A * 8 + B, col + 1)
+
+
+histoA = []
+for a in range(8):
+
+    # back(a,len(prog)-1)
+    find(a)
+
+print(histoA)
+
+
+
+a = histoA[0]
 ouput = []
 i = 0
 while i < len(prog):
