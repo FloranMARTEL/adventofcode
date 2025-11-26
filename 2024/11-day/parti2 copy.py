@@ -7,50 +7,60 @@ data = file.read()
 datalist = data.split(" ")
 
 
+class Rock:
+    
+    def __init__(self,val,compte):
+        self.compte = compte
+        self.val = val
+        self.child = []
 
-def nextval(val):
-    if val == "0":
-        return ["1"]
-    elif len(val)%2 == 0:
-        p = val
-        p1 = p[:len(p)//2]
-        p2 = p[len(p)//2:]
-        p2 = str(int(p2))
-
-        return [p1,p2]
-
-    else:
-        return [str(int(val) * 2024)]
+    # def next()
     
 
 
+        
 
 
 
-dicp = dict()
+
+for v in range(len(datalist)):
+    datalist[v] = (datalist[v],1)
+
+
+
 i = 75
 while i > 0:
-    print(i)
-    j = 0
-    while j < len(datalist):
-        if datalist[j] in dicp:
-            l = dicp[datalist[j]]
+    cpt = dict()
 
-            del datalist[j]
-            for v in reversed(l):
-                datalist.insert(j,v)
+    for v in datalist:
+        if v[0] in cpt:
+            cpt[v[0]] += v[1]
         else:
-            l = nextval(datalist[j])
-            dicp[datalist[j]] = l
+            cpt[v[0]] = v[1]
 
-            del datalist[j]
-            for v in reversed(l):
-                datalist.insert(j,v)
+    l = []
+    for key in cpt:
+        
+        if key == "0":
+            l.append(("1",cpt[key]))
+        elif len(key)%2 == 0:
 
-        j+=len(l)
+            l.append((key[:len(key)//2],cpt[key]))
+            l.append((str(int(key[len(key)//2:])),cpt[key]))
+        else:
+            l.append((str(int(key)*2024),cpt[key]))
 
 
-    i-=1
+    datalist = l
+    i -= 1
 
 
-print(len(datalist))
+
+
+
+        
+s=0
+for v in datalist:
+    s+=v[1]
+
+print(s)

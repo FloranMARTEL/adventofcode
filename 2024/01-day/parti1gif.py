@@ -64,13 +64,13 @@ for i in tqdm(range(len(l1))):
     if i < 10:
         strhistdiff = list(map(str,histdiff))
         G.writeText(((G.size[0]//2)-15,paddinTop),"\n".join(strhistdiff),True)
-        G.checkImage(3)
+        G.checkImage(100)
 
     elif i%15  == 0 or i == len(l1)-1:
         G.crate_image()
 
         G.writeText((10,10),"L1",fontsize=30)
-        strl1 = list(map(str,l1[i-5:]))
+        strl1 = list(map(str,l1[i:]))
         G.writeText((10,paddinTop),"\n".join(strl1))
 
         G.writeText((10,10),"L2",False,fontsize=30)

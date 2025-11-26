@@ -6,110 +6,44 @@ data = file.read()
 
 datalist = data.split(" ")
 
-
-def plus5(v):
-    li = [v]
-    a=5
-    while a > 0:
-        j = 0
-        while j < len(li):
-            if li[j] in dicp:
-                val = dicp[li[j]]
-                ll = len(val)
-                if ll >= 5:
-                    a = reversed(val[4])
-                else:
-                    a = 
-                
-                del datalist[j]
-                for val in a:
-                    li.insert(j,val)
+for v in range(len(datalist)):
+    datalist[v] = (datalist[v],1)
 
 
 
-            if li[j] == "0":
-                li[j] = "1"
-            elif len(li[j])%2 == 0:
-                p = li[j]
-                p1 = p[:len(p)//2]
-                p2 = p[len(p)//2:]
-                p2 = str(int(p2))
+i = 75
+while i > 0:
+    cpt = dict()
 
-                del li[j]
-                li.insert(j,p2)
-                li.insert(j,p1)
-                j+=1
-            else:
-                li[j] = str(int(li[j]) * 2024)
-            
-            j+=1
+    for v in datalist:
+        if v[0] in cpt:
+            cpt[v[0]] += v[1]
+        else:
+            cpt[v[0]] = v[1]
 
-        a-=1
-    return li
-
-def nextval(val):
-    li = [val]
-    if li[j] == "0":
-        li[j] = "1"
-    elif len(li[j])%2 == 0:
-        p = li[j]
-        p1 = p[:len(p)//2]
-        p2 = p[len(p)//2:]
-        p2 = str(int(p2))
-
-        del li[j]
-        li.insert(j,p2)
-        li.insert(j,p1)
-        j+=1
-    else:
-        li[j] = str(int(li[j]) * 2024)
-    
-    return li
-
-def calcul(li,nb,old = None):
-    i = 0
-    nv = []
-    while i < len(li):
-
-        nv.append(nextval(li[i]))
-
-        i+=1
-
-    calcul(nv,nb-1,li)
-
-    if val in dicp:
-        l = dicp[val]
-        step = len(l)
-
-        vl = []
-        for v in l:
-            vl.extend(calcul(v,nb-step-1))
+    l = []
+    for key in cpt:
         
-        dicp[val].append()
+        if key == "0":
+            l.append(("1",cpt[key]))
+        elif len(key)%2 == 0:
 
-    else:
+            l.append((key[:len(key)//2],cpt[key]))
+            l.append((str(int(key[len(key)//2:])),cpt[key]))
+        else:
+            l.append((str(int(key)*2024),cpt[key]))
+
+
+    datalist = l
+    i -= 1
+
+
+
+
+
         
-        l = nextval(val)
-        dicp[val] = [l]
-        
-        vl = []
-        for v in l:
-            vl.extend(calcul(v,nb-1))
-    
+s=0
+for v in datalist:
+    s+=v[1]
 
-    return vl
-        
-
-
-
-
-
-dicp = dict()
-
-v = calcul(datalist,75)
-        
-
-
-
-
-print(len(v))
+print(s)

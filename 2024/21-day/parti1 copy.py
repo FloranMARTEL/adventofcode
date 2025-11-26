@@ -127,51 +127,53 @@ for i in range(len(directione)):
                     if directione[newi][newj] != None:
                         grahedir1[(i,j)][(newi,newj)] = 1
 
+def gendir2(rob):
+    grahedir2 = dict()
+    for i in range(len(directione)):
+        for j in range(len(directione[i])):
+            if directione[i][j] != None:
+                grahedir2[(i,j)] = dict()
 
-for i in range(len(directione)):
-    for j in range(len(directione[i])):
-        if directione[i][j] != None:
-            grahedir2[(i,j)] = dict()
+                for d in direc:
+                    
+                    newi = i+d[0]
+                    newj = j+d[1]
 
-            for d in direc:
-                
-                newi = i+d[0]
-                newj = j+d[1]
+                    if newi >= 0 and newi < len(directione) and newj >= 0 and newj < len(directione[i]):
+                        if directione[newi][newj] != None:
+                            dircar = convarr(d[0],d[1])[:-1]
+                            id = findindex(directione,dircar)
+                            a,val = dij(grahedir1,rob,id)
+                            val+=1
 
-                if newi >= 0 and newi < len(directione) and newj >= 0 and newj < len(directione[i]):
-                    if directione[newi][newj] != None:
-                        dircar = convarr(d[0],d[1])[:-1]
-                        id = findindex(directione,dircar)
-                        a,val = dij(grahedir1,rob3,id)
-                        val+=1
-                        a,val2 = dij(grahedir1,id,rob3) #A
-                        val2+=1
-                        grahedir2[(i,j)][(newi,newj)] = val+val2
+                            grahedir2[(i,j)][(newi,newj)] = val
+
+    return grahedir2
 
 
 
 
+def genpre(rob,g2):
+    for i in range(len(paver)):
+        for j in range(len(paver[i])):
+            if paver[i][j] != None:
 
-for i in range(len(paver)):
-    for j in range(len(paver[i])):
-        if paver[i][j] != None:
+                grahepav[(i,j)] = dict()
 
-            grahepav[(i,j)] = dict()
+                for d in direc:
+                    
+                    newi = i+d[0]
+                    newj = j+d[1]
 
-            for d in direc:
-                
-                newi = i+d[0]
-                newj = j+d[1]
+                    if newi >= 0 and newi < len(paver) and newj >= 0 and newj < len(paver[i]):
 
-                if newi >= 0 and newi < len(paver) and newj >= 0 and newj < len(paver[i]):
-
-                    if paver[newi][newj] != None:
-                        dircar = convarr(d[0],d[1])[:-1]
-                        id = findindex(directione,dircar)
-                        a,val = dij(grahedir2,rob2,id)
-                        a,val2 = dij(grahedir2,id,rob2) #A
-                        val2+=1
-                        grahepav[(i,j)][(newi,newj)] = val+val2
+                        if paver[newi][newj] != None:
+                            dircar = convarr(d[0],d[1])[:-1]
+                            id = findindex(directione,dircar)
+                            a,val = dij(g2,rob,id)
+                            a,val2 = dij(g2,id,rob) #A
+                            #val2+=1
+                            grahepav[(i,j)][(newi,newj)] = val+val2
 
 
 
@@ -199,18 +201,16 @@ def givepathr1(l,pav,rb):
 su = 0
 fin = ""
 for l in datalist:
-    r = 0
+
     for c in l:
-        id = findindex(paver,c)
-        a,val = dij(grahepav,rob1,id)
-        rob1 = id
-        r += val
 
-    # newl,rob1 = givepathr1(l,paver,rob1)
-    # newl,rob2 = givepathr1(newl,directione,rob2)
-    # newl,rob3 = givepathr1(newl,directione,rob3)
+        g2 = gendir2(rob3)
+        g1 = genpre(rob2,g2)
 
-    # print(len(newl))
+
+    
+
+    
     print(r)
     su += (int(l[:-1]) * r)
 

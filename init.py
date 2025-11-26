@@ -1,7 +1,7 @@
 import os
 
-year = "2022"
-nbday = 25
+year = "2025"
+nbday = 12
 os.mkdir(year)
 
 for d in range(1,nbday+1):
