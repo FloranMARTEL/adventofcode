@@ -17,11 +17,8 @@ for i in range(len(datalist)):
 cptd = dict()
 
 for v in l2:
-
-    if v in cptd:
-        cptd[v] += 1
-    else:
-        cptd[v] = 1
+    
+    cptd[v] = cptd.get(v,0) + 1
 
 score = 0
 for v in l1:
