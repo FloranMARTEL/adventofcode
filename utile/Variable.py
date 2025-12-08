@@ -28,3 +28,17 @@ Dir4 = [
     (-1,0),
     (0,1)
 ]
+
+def gendir(i,j,dir):
+    l = []
+    for d in dir:
+        newi = i+d[1]
+        newj = j+d[0]
+        l.append((newi,newj))
+
+    return l
+
+def inBorder(i,j,l):
+    return i >= 0 and i < len(l) and j >= 0 and j < len(l[i])
+
+

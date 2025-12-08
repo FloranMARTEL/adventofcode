@@ -65,9 +65,6 @@ def dij(graph,start,end):
             print("erreur")
             break
 
-        
-
-
 
     path = [end]
     curent = end
