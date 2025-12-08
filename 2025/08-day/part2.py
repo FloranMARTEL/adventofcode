@@ -17,21 +17,13 @@ def dit(a,b):
 datalist = data.split("\n")
 
 
-m = []
 cos = []
 
 for i in range(len(datalist)):
-    m.append([])
     for j in range(i+1,len(datalist)):
-
-        if i == j:
-            m[i].append(0)
-        else:
-
+        if i != j:
             ci = list(map(int,datalist[i].split(",")))
             cj = list(map(int,datalist[j].split(",")))
-
-            m[i].append(dit(ci,cj))
             cos.append((i,j,dit(ci,cj)))
 
 
@@ -43,7 +35,7 @@ nb = 0
 
 s = []
 
-while len(cos) > 0:
+while len(s) == 0 or len(s[0]) != len(datalist):
     mi = None
     co = (None,None)
 
@@ -57,35 +49,33 @@ while len(cos) > 0:
     ids1 = None
     ids = None
     for ii,ss in enumerate(s):
-        if co[0] in ss or co[1] in ss:
+        if co[0] in s[ii] or co[1] in s[ii]:
 
-            if (co[0] in ss and co[1] not in ss) or (co[0] not in ss and co[1] in ss):
+            if not(co[0] in s[ii] and co[1] in s[ii]):
                 lco = co
 
 
             s[ii].add(co[0])
             s[ii].add(co[1])
             t = True
-            ls[nbs] = ss
+            ls[nbs] = s[ii]
 
             if ids1 == None:
                 ids1 = ii
 
             ids = ii
             nbs+=1
-    
-    
 
-    if nbs == 2:
-        s[ids1] = ls[0].union(ls[1])
-        del s[ids]
-
+            if nbs == 2:
+                s[ids1] = ls[0].union(ls[1])
+                del s[ids]
+                break
+    
     if t == False:
         s.append(set([co[0],co[1]]))
         
 
     nb+=1
-
 
 
 r = int(datalist[lco[0]].split(",")[0])*int(datalist[lco[1]].split(",")[0])
