@@ -1,0 +1,47 @@
+@startuml
+title Chaîne de valeur - Projet de ludification du Web
+
+skinparam packageStyle rectangle
+
+' ---- ACTIVITÉS DE SOUTIEN ----
+package "Infrastructure Technique\n- Serveurs & Hébergement" as Infra {
+}
+
+package "Développement Plateforme\n- Backend\n- API\n- Framework" as Dev {
+}
+
+package "Gestion des Connaissances\n- Ajout de nouveaux langages\n- Mise à jour exercices\n- Documentation" as Knowledge {
+}
+
+package "Ressources Humaines\n- Devs\n- Experts pédagogiques\n- Game designers" as RH {
+}
+
+' ---- ACTIVITÉS PRIMAIRES ----
+package "Conception pédagogique\n- Création d’exercices" as Pedagogie {
+}
+
+package "Gamification\n- Progression\n- Défis\n- LeaderBoard" as Gamif {
+}
+
+package "Déploiement contenu\n- Publication modules" as Deploiement {
+}
+
+package "Support utilisateur\n- FAQ\n- Assistance\n- Suivi progression" as Support {
+}
+
+package "Évaluation & Amélioration\n- Feedback utilisateurs\n- Analyse data" as Evaluation {
+}
+
+' ---- CHAÎNE DE VALEUR ----
+Infra --> Pedagogie
+Dev --> Gamif
+Knowledge --> Deploiement
+RH --> Support
+
+Pedagogie --> Gamif
+Gamif --> Deploiement
+Deploiement --> Support
+Support --> Evaluation
+Evaluation --> Pedagogie : Amélioration continue
+
+@enduml
