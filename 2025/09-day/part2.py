@@ -124,8 +124,11 @@ o = co[0]
 os = None
 s = 0
 
-def seek(a,b,d,f):
+def seek(a,b):
 
+    d = 0
+    f = len(fi)
+    v = None
     while True:
 
         o = ((f-d)//2)+d
@@ -134,44 +137,107 @@ def seek(a,b,d,f):
 
         if vo[0] < a[0]:
             d = o
-        elif v[0] > b[0]:
+        elif vo[0] > b[0]:
             f = o
         else:
             n = fi[o-1]
             m = fi[o+1]
 
-            if be2(a[1],b[1],n):
+            if be2(a[1],b[1],n[1]):
                 v = n
-            elif be2(a[1],b[1],o):
+            elif be2(a[1],b[1],o[1]):
                 v = o
-            elif be2(a[1],b[1],m):
+            elif be2(a[1],b[1],m[1]):
                 v = p
             break
     
+    if v == None:
+        return None
+
+    zon.append(di[v])
+    # v trouver
+
+def seek2(a,b):
+
+    d = 0
+    f = len(fi)
+    v = None
+    while True:
+
+        o = ((f-d)//2)+d
+
+        vo = fi[o]
+
+        if vo[1] < a[1]:
+            d = o
+        elif vo[1] > b[1]:
+            f = o
+        else:
+            n = fi[o-1]
+            m = fi[o+1]
+
+            if be2(a[0],b[0],n[0]):
+                v = n
+            elif be2(a[0],b[0],o[0]):
+                v = o
+            elif be2(a[0],b[0],m[0]):
+                v = p
+            break
+    
+    if v == None:
+        return None
+
+    zon.append(di[v])
     # v trouver
      
-
+nb = None
 while s < len(co):
     os = s
 
     v = co[s]
     
-    i = 1
-    while True:
-        v2 = co[s+i]
-        v3 = co[s-i]
+    if nb == None or nb%2 == 0:
+        i = 1
+        while True:
+            v2 = co[s+i]
+            v3 = co[s-i]
 
-        if v2[0] == v[0]:
-            
+            if v2[0] == v[0]:
+                seek(v,v2)
+                s = s+i
+                break
+
+            if v3[0] == v[0]:
+                seek(v,v3)
+                s = s-i
+                break
+            i+=1
+
+        if nb == None:
+            nb = 2
+    
+    if nb == None or nb%2 == 1:
+        i = 1
+        while True:
+            v2 = co[s+i]
+            v3 = co[s-i]
+
+            if v2[1] == v[1]:
+                seek(v,v2)
+                s = s+i
+                break
+
+            if v3[1] == v[1]:
+                seek(v,v3)
+                s = s-i 
+                break
+            i+=1
+
+        if nb == None:
+            nb = 1
 
 
-            s = s+i
-            break
-
-        if v3[0] == v[0]:
-            s = s-i 
-            break
-        i+=1
+    nb+=1
 
 
 

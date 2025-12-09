@@ -64,21 +64,53 @@ def drawpoint(image,co):
         for j in range(-1*s,1*s):
             image.putpixel((co[0]+i,co[1]+j),color)
 
+def bet(d,f,v):
+
+    if d <= f:
+        return d <= v < f
+    else:
+        return f < v <= d
+
+
 def drawligne(image,co1,co2):
 
     color = (255,255,0)
     co1 = conv_interval(co1)
     co2 = conv_interval(co2)
 
-
-    difx = co1[0] - co2[0]
-    dify = co1[1] - co2[1]
-    r = difx/dify
     
-    for i in range(difx):
-        for j in range(r):
-            image.putpixel((co1[0]+i,co1[1]+j),color)
+    difx = co2[0] - co1[0]
+    dify = co2[1] - co1[1]
 
+    
+    if dify == 0:
+        rx = difx
+    else:
+        rx = difx/dify
+
+    if difx == 0:
+        ry = dify
+    else:
+        ry = dify/difx
+
+
+    if (difx < 0 and rx > 0) or (difx > 0 and rx < 0):
+        rx *= -1
+    
+    if (dify < 0 and ry > 0) or (dify > 0 and ry < 0):
+        ry *= -1
+
+    vc1 = co1[0]
+    vc2 = co1[1]
+    while bet(co1[0],co2[0],vc1) and bet(co1[1],co2[1],vc2) :
+
+        vc1 += rx
+        vc2 += ry
+
+        if not(bet(co1[0],co2[0],vc1) and bet(co1[1],co2[1],vc2) ):
+            break
+
+        image.putpixel((math.floor(vc1),math.floor(vc2)),color)
 
 
 
@@ -89,14 +121,13 @@ for i in range(len(datalist)):
     ci = list(map(int,datalist[i].split(",")))
 
     drawpoint(gi.image,ci)
+        
 
     for j in range(i+1,len(datalist)):
         if i != j:
             cj = list(map(int,datalist[j].split(",")))
             cos.append((i,j,dit(ci,cj)))
 
-
-gi.debugCruentImage()
 
 
 
@@ -113,8 +144,12 @@ while len(s) == 0 or len(s[0]) != len(datalist):
 
     v = cos.pop(0)
     co = (v[0],v[1])
-    
 
+    ci = list(map(int,datalist[v[0]].split(",")))
+    cj = list(map(int,datalist[v[1]].split(",")))
+
+    drawligne(gi.image,ci,cj)
+    
     t = False
     nbs = 0
     ls = [None,None]
@@ -145,14 +180,17 @@ while len(s) == 0 or len(s[0]) != len(datalist):
     
     if t == False:
         s.append(set([co[0],co[1]]))
-        
+    
+
+    if  nb % 100 == 0:
+        gi.checkImage()
 
     nb+=1
 
 
 r = int(datalist[lco[0]].split(",")[0])*int(datalist[lco[1]].split(",")[0])
 
-
+gi.creatGIF("p2")
 print(r)
 
 
