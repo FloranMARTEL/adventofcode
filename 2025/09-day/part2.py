@@ -1,11 +1,12 @@
 #parti1
 
 file = open("inputExemple.txt","r")
-# file = open("input.txt","r")
+file = open("input.txt","r")
 data = file.read()
 
 datalist = data.split("\n")
 
+#123285564 to low
 
 co = []
 for l in datalist:
@@ -88,6 +89,7 @@ def be2(a,b,v):
 
 di = dict()
 fi = []
+fi2 = []
 for i in range(len(co)):
     c1 = co[i]
     for j in range(i+1,len(co)):
@@ -111,16 +113,22 @@ for i in range(len(co)):
                 continue
 
             if cx[1] == l[0][1]:
-                di[cx] = (cx,l[1])
-                fi.append(cx)
+                sible = (cx[0],l[1][1])
+                di[sible] = (cx,l[1])
+                fi.append(sible)
+                fi2.append(sible)
             elif cx[1] == l[1][1]:
-                di[cx] = (cx,l[0])
-                fi.append(cx)
+                sible = (cx[0],l[0][1])
+
+                di[sible] = (cx,l[0])
+                fi.append(sible)
+                fi2.append(sible)
 
 
 fi.sort(key=lambda x:x[0])
+fi2.sort(key=lambda x:x[1])
 print("ici")
-o = co[0]
+sso = 0
 os = None
 s = 0
 
@@ -143,12 +151,12 @@ def seek(a,b):
             n = fi[o-1]
             m = fi[o+1]
 
-            if be2(a[1],b[1],n[1]):
+            if be2(a[1],b[1],n[1]) and be2(a[0],b[0],n[0]):
                 v = n
-            elif be2(a[1],b[1],o[1]):
-                v = o
-            elif be2(a[1],b[1],m[1]):
-                v = p
+            elif be2(a[1],b[1],vo[1]) and be2(a[0],b[0],vo[0]):
+                v = vo
+            elif be2(a[1],b[1],m[1]) and be2(a[0],b[0],m[0]):
+                v = m
             break
     
     if v == None:
@@ -160,28 +168,28 @@ def seek(a,b):
 def seek2(a,b):
 
     d = 0
-    f = len(fi)
+    f = len(fi2)
     v = None
     while True:
 
         o = ((f-d)//2)+d
 
-        vo = fi[o]
+        vo = fi2[o]
 
         if vo[1] < a[1]:
             d = o
         elif vo[1] > b[1]:
             f = o
         else:
-            n = fi[o-1]
-            m = fi[o+1]
+            n = fi2[o-1]
+            m = fi2[o+1]
 
-            if be2(a[0],b[0],n[0]):
+            if be2(a[0],b[0],n[0]) and be2(a[1],b[1],n[1]):
                 v = n
-            elif be2(a[0],b[0],o[0]):
-                v = o
-            elif be2(a[0],b[0],m[0]):
-                v = p
+            elif be2(a[0],b[0],vo[0]) and be2(a[1],b[1],vo[1]):
+                v = vo
+            elif be2(a[0],b[0],m[0]) and be2(a[1],b[1],m[1]):
+                v = m
             break
     
     if v == None:
@@ -191,7 +199,7 @@ def seek2(a,b):
     # v trouver
      
 nb = None
-while s < len(co):
+while s != sso or (nb == None or nb < 3):
     os = s
 
     v = co[s]
@@ -199,15 +207,20 @@ while s < len(co):
     if nb == None or nb%2 == 0:
         i = 1
         while True:
-            v2 = co[s+i]
-            v3 = co[s-i]
+            v2 = None
+            if 0 <= s+i < len(co):
+                v2 = co[s+i]
+            
+            v3 = None
+            if 0 <= s-i < len(co):
+                v3 = co[s-i]
 
-            if v2[0] == v[0]:
+            if v2 != None and v2[0] == v[0]:
                 seek(v,v2)
                 s = s+i
                 break
 
-            if v3[0] == v[0]:
+            if v3 != None and v3[0] == v[0]:
                 seek(v,v3)
                 s = s-i
                 break
@@ -219,16 +232,21 @@ while s < len(co):
     if nb == None or nb%2 == 1:
         i = 1
         while True:
-            v2 = co[s+i]
-            v3 = co[s-i]
+            v2 = None
+            if 0 <= s+i < len(co):
+                v2 = co[s+i]
+            
+            v3 = None
+            if 0 <= s-i < len(co):
+                v3 = co[s-i]
 
-            if v2[1] == v[1]:
-                seek(v,v2)
+            if v2 != None and v2[1] == v[1]:
+                seek2(v,v2)
                 s = s+i
                 break
 
-            if v3[1] == v[1]:
-                seek(v,v3)
+            if v3 != None and v3[1] == v[1]:
+                seek2(v,v3)
                 s = s-i 
                 break
             i+=1
@@ -261,7 +279,7 @@ def coinzone(c):
 
 ma = None
 for i in range(len(co)):
-    # print(i)
+    print(i)
     for j in range(i+1,len(co)):
 
         c1 = co[i]
