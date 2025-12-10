@@ -5,8 +5,10 @@ file = open("input.txt","r")
 data = file.read()
 
 datalist = data.split("\n")
-
-#123285564 to low
+#4599890450
+#4576209055
+#4068901411 to hight
+#123285564 too low
 
 co = []
 for l in datalist:
