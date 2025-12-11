@@ -128,3 +128,72 @@ class Djikstra:
         
 
         return getss(end,start,parent)
+##########################
+
+
+def h(v,goal):
+
+    dif = 0
+    for i in range(len(v)):
+        d = (goal[i] - v[i])
+        # if d < 0:
+        #     return 100000
+        
+        dif += d*d
+    return dif
+    # return math.sqrt(dif)
+
+def gen_node(curent):
+
+    chi = []
+    for bo in b:
+        chi.append(app(curent,bo))
+    
+    return chi
+
+import heapq
+
+def myas(start,end):
+
+    parent = {start : None}
+    coup = {start : 0}
+
+    openlist = [start]
+
+    openheap = []
+    heapq.heappush(openheap, (0, 0, start))
+    closed = set()
+    cpt = 0
+    while openheap:
+        cpt+=1
+        # print(cpt,len(parent))
+        f, current_g, current = heapq.heappop(openheap)
+
+        if current in closed:
+            continue
+        closed.add(current)
+
+        if current == end:
+            # Reconstituer le chemin
+            path = [current]
+            while current in parent:
+                current = parent[current]
+                path.append(current)
+            return path[::-1]
+
+
+        neighbor = gen_node(current)
+
+
+        for n in neighbor:
+
+            cost = current_g + 1
+
+            if n not in coup or cost < coup[n]:
+                coup[n] = cost
+                parent[n] = current
+                f_cost = cost + h(n,end)
+                heapq.heappush(openheap, (f_cost, cost, n))
+
+    
+    return []
