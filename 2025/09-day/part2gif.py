@@ -1,10 +1,17 @@
 #parti1
 
+from Gif import *
+
 file = open("inputExemple.txt","r")
-# file = open("input.txt","r")
+file = open("input.txt","r")
 data = file.read()
 
 datalist = data.split("\n")
+
+size = (500,500)
+gi = GifMaker(None,None,size)
+
+
 
 
 co = []
@@ -65,10 +72,37 @@ for c in co2:
     cored.append((cx,cy))
 
 
+##
+coefx = ((size[0]-10)/(xmaindex))
+coefy = ((size[1]-10)/(ymaindex))
+def conv_interval(co):
+
+    x = int((co[0]-xmaindex)*coefx)
+    y = int((co[1]-ymaindex)*coefy)
+
+    return (x,y)
+
+
+def drawpoint(image,co,color = (255,0,0) ):
+
+    # co = conv_interval(co)
+
+    s = 2
+    image.putpixel((co[0],co[1]),color)
+
+    # for i in range(-1*s,1*s):
+    #     for j in range(-1*s,1*s):
+speed = 25
+##
+
+
 i = 0
 
 scord = set(cored)
 
+gi.crate_image()
+print(xmaindex)
+print(ymaindex)
 
 green = False
 gm = []
@@ -77,6 +111,7 @@ for j in range(ymaindex+1):
     for i in range(xmaindex+1):
         if (i,j) in scord:
             gm[j].append("#")
+            drawpoint(gi.image,(i,j))
 
             green = not green
 
@@ -84,7 +119,13 @@ for j in range(ymaindex+1):
             if green == False:
                 gm[j].append(".")
             else:
+                drawpoint(gi.image,(i,j),(0,255,0))
                 gm[j].append("X")
+    gi.checkImage(speed)
+
+print(len(gm))
+print(len(gm))
+
 
 
 green = False
@@ -94,9 +135,10 @@ for i in range(xmaindex+1):
             green = not green
         else:
             if green:
+                drawpoint(gi.image,(i,j),(0,255,0))
                 gm[j][i] = "X"
 
-
+    gi.checkImage(speed)
 
 ##
 
@@ -129,14 +171,21 @@ op = [start]
 
 clo = set()
 
+cpo = 0
 while len(op)!=0:
-
-    cu = op.pop()
+    cpo +=1
+    cu = op.pop(0)
     if cu in clo:
         continue
 
     clo.add(cu)
+    drawpoint(gi.image,cu,(0,255,0))
+
     gm[cu[1]][cu[0]] = "X"
+    
+    if cpo %250 == 0:
+        gi.checkImage(speed)
+
     
 
     for d in gendir(cu[0],cu[1],Dir4):
@@ -145,6 +194,9 @@ while len(op)!=0:
                 op.append((d[0],d[1]))
 
 
+gi.checkImage(300)
+gi.debugCruentImage()
+gi.creatGIF("p2")
 
 ###################
 
